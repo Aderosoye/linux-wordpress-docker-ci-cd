@@ -1,0 +1,33 @@
+stages:
+  - validate
+  - deploy
+
+variables:
+  DEPLOY_PATH: "/opt/wordpress-stack"
+
+validate:
+  stage: validate
+  image: alpine:latest
+  script:
+    - test -f docker-compose.yml
+    - test -d docker
+    - test -d scripts
+    - grep -q "wordpress" docker-compose.yml
+    - echo "Validation passed"
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client rsync bash
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+  script:
+    - rsync -av --exclude '.git/' --exclude '.github/' --exclude '.env' ./ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+    - ssh "$DEPLOY_USER@$DEPLOY_HOST" "cd $DEPLOY_PATH && docker compose pull && docker compose up -d --remove-orphans"
+  only:
+    - main
