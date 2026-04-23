@@ -34,7 +34,6 @@ The stack separates responsibilities clearly:
 - **Docker volumes** preserve WordPress and database data across container restarts.
 - **CI/CD pipeline** validates the repository and deploys updates to the Linux host.
 
-This design mirrors a simple but realistic production-style separation of concerns.
 
 ## Linux Administration Work Performed
 The Linux administration side of the project involved the sort of tasks that matter in real environments, not just textbook commands. Key areas included:
@@ -74,7 +73,6 @@ Without persistence, restarting containers would destroy important application s
 - Database storage
 - WordPress content and configuration storage
 
-That is the difference between a toy container demo and something you can actually operate.
 
 ## CI/CD Design
 The CI/CD layer was intentionally simple and realistic.
@@ -91,7 +89,6 @@ The pipeline checks for the presence of required deployment files such as:
 - Nginx configuration
 - deployment scripts
 
-That prevents dumb failures from hitting the server.
 
 ### Deployment Stage
 Deployment is performed over SSH using `rsync`, followed by a remote `docker compose up -d` command. This is a straightforward pattern for small to mid-sized self-managed environments.
@@ -102,7 +99,7 @@ The result is a functioning WordPress stack that can be:
 - served through Nginx,
 - persisted across restarts,
 - updated through a pipeline,
-- and maintained with basic operational scripts.
+- maintained with basic operational scripts.
 
 ## Challenges Encountered
 This kind of project always exposes the gap between theory and operations. The most common issues in this deployment pattern include:
@@ -114,7 +111,6 @@ This kind of project always exposes the gap between theory and operations. The m
 - service startup failures after config edits,
 - and permission issues that break application writes.
 
-Those are not edge cases. That is normal systems work.
 
 ## Troubleshooting Approach
 The project was approached with a layered troubleshooting model:
@@ -127,7 +123,6 @@ The project was approached with a layered troubleshooting model:
 7. Confirm firewall or cloud security rules.
 8. Confirm file paths, permissions, and mounted volumes.
 
-That sequence matters because random troubleshooting wastes time.
 
 ## Security and Operational Considerations
 Even in a small WordPress stack, there are foundational controls worth applying:
@@ -137,7 +132,7 @@ Even in a small WordPress stack, there are foundational controls worth applying:
 - keep container images updated,
 - back up both database and application data,
 - validate SSH key permissions,
-- and minimize direct changes on the server outside version-controlled deployment files.
+- minimize direct changes on the server outside version-controlled deployment files.
 
 ## Skills Demonstrated
 This project demonstrates hands-on capability in:
