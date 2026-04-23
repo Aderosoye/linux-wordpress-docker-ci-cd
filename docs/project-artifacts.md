@@ -1,6 +1,6 @@
 # Project Artifacts Included
 
-This repository includes all core artifacts needed to present the project professionally on GitHub.
+This repository includes all core artifacts used in this project.
 
 ## Documentation
 - `README.md` — repository overview and quick-start guidance
@@ -25,9 +25,3 @@ This repository includes all core artifacts needed to present the project profes
 - `scripts/health-check.sh`
 - `scripts/first-run.sh`
 
-## Why This Set Is Enough
-This artifact set is sufficient for:
-- a portfolio repository,
-- a technical interview walkthrough,
-- a GitHub case study,
-- or a practical demonstration of Linux admin + Docker + CI/CD fundamentals.
